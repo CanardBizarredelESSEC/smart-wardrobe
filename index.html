@@ -1,136 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Wardrobe - Outfit & Resale Helper</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Wardrobe Swipe</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="app-header">
-    <div class="container">
-      <h1>Smart Wardrobe</h1>
-      <p class="subtitle">Plan your outfit, identify sellable pieces, and get styling inspo.</p>
-    </div>
-  </header>
+	<header class="topbar">
+		<div class="topbar__left">
+			<h1>Wardrobe</h1>
+		</div>
+		<div class="topbar__right">
+			<button id="seedBtn" class="icon-btn" title="Load demo">🌱</button>
+			<button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+		</div>
+	</header>
 
-  <main class="container">
-    <section class="card" id="add-item-section">
-      <h2>Add to Wardrobe</h2>
-      <form id="add-item-form" class="grid-2">
-        <div class="form-field">
-          <label for="name">Name</label>
-          <input type="text" id="name" placeholder="e.g., White Oxford Shirt" required>
-        </div>
-        <div class="form-field">
-          <label for="category">Category</label>
-          <select id="category" required>
-            <option value="top">Top</option>
-            <option value="bottom">Bottom</option>
-            <option value="dress">Dress</option>
-            <option value="outerwear">Outerwear</option>
-            <option value="shoes">Shoes</option>
-            <option value="accessory">Accessory</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="color">Color</label>
-          <input type="text" id="color" placeholder="e.g., Navy" required>
-        </div>
-        <div class="form-field">
-          <label for="formality">Formality</label>
-          <select id="formality" required>
-            <option value="casual">Casual</option>
-            <option value="smart-casual">Smart Casual</option>
-            <option value="business">Business</option>
-            <option value="formal">Formal</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="warmth">Warmth</label>
-          <select id="warmth" required>
-            <option value="light">Light</option>
-            <option value="medium">Medium</option>
-            <option value="warm">Warm</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="imageUrl">Image URL</label>
-          <input type="url" id="imageUrl" placeholder="https://... (optional)">
-        </div>
-        <div class="form-field">
-          <label for="cost">Original Price (optional)</label>
-          <input type="number" id="cost" placeholder="e.g., 120" min="0" step="1">
-        </div>
-        <div class="form-field">
-          <label for="brand">Brand (optional)</label>
-          <input type="text" id="brand" placeholder="e.g., Uniqlo">
-        </div>
-        <div class="form-actions span-2">
-          <button type="submit" class="btn primary">Add Item</button>
-          <button type="button" id="seedBtn" class="btn">Load Demo Wardrobe</button>
-          <button type="button" id="clearBtn" class="btn danger">Clear All</button>
-        </div>
-      </form>
-    </section>
+	<main id="views">
+		<section id="view-swipe" class="view active">
+			<div class="controls">
+				<div class="control">
+					<label for="occasion">Occasion</label>
+					<select id="occasion">
+						<option value="casual">Casual</option>
+						<option value="smart-casual" selected>Smart Casual</option>
+						<option value="business">Business</option>
+						<option value="formal">Formal</option>
+					</select>
+				</div>
+				<div class="control">
+					<label for="temp">Temp °C</label>
+					<input id="temp" type="number" value="18" inputmode="numeric">
+				</div>
+				<button id="refreshDeckBtn" class="btn btn-secondary">Refresh</button>
+			</div>
 
-    <section class="card" id="wardrobe-section">
-      <h2>Your Wardrobe</h2>
-      <div class="toolbar">
-        <input type="text" id="searchInput" placeholder="Search by name or color...">
-        <select id="filterCategory">
-          <option value="all">All categories</option>
-          <option value="top">Top</option>
-          <option value="bottom">Bottom</option>
-          <option value="dress">Dress</option>
-          <option value="outerwear">Outerwear</option>
-          <option value="shoes">Shoes</option>
-          <option value="accessory">Accessory</option>
-        </select>
-      </div>
-      <div id="wardrobeGrid" class="grid-4"></div>
-    </section>
+			<div id="deck" class="deck"></div>
 
-    <section class="card" id="outfit-section">
-      <h2>Outfit Suggestion</h2>
-      <form id="outfit-form" class="grid-3">
-        <div class="form-field">
-          <label for="temp">Temperature (°C)</label>
-          <input type="number" id="temp" placeholder="e.g., 18" value="18">
-        </div>
-        <div class="form-field">
-          <label for="occasion">Occasion</label>
-          <select id="occasion">
-            <option value="casual">Casual</option>
-            <option value="smart-casual">Smart Casual</option>
-            <option value="business">Business</option>
-            <option value="formal">Formal</option>
-          </select>
-        </div>
-        <div class="form-actions">
-          <button class="btn primary" type="submit">Suggest Outfit</button>
-        </div>
-      </form>
-      <div id="outfitResult" class="outfit-result"></div>
-    </section>
+			<div class="swipe-actions">
+				<button id="btnNope" class="swipe-btn swipe-btn--nope" aria-label="Skip">✖</button>
+				<button id="btnLike" class="swipe-btn swipe-btn--like" aria-label="Wear">❤</button>
+			</div>
+		</section>
 
-    <section class="card" id="resale-section">
-      <h2>Sell Recommendations</h2>
-      <p class="muted">Items you rarely wear with suggested resale prices.</p>
-      <div id="resaleList" class="grid-3"></div>
-    </section>
-  </main>
+		<section id="view-wardrobe" class="view">
+			<div class="section-header">
+				<h2>Your Wardrobe</h2>
+				<button id="addOpenBtn" class="btn btn-primary">Add Item</button>
+			</div>
+			<div class="toolbar">
+				<input id="searchInput" type="text" placeholder="Search name or color">
+				<select id="filterCategory">
+					<option value="all" selected>All</option>
+					<option value="top">Top</option>
+					<option value="bottom">Bottom</option>
+					<option value="dress">Dress</option>
+					<option value="outerwear">Outerwear</option>
+					<option value="shoes">Shoes</option>
+					<option value="accessory">Accessory</option>
+				</select>
+			</div>
+			<div id="wardrobeGrid" class="grid"></div>
+		</section>
 
-  <footer class="app-footer">
-    <div class="container">
-      <p>Built with ❤️ to help you wear more and waste less.</p>
-    </div>
-  </footer>
+		<section id="view-sell" class="view">
+			<div class="section-header">
+				<h2>Sell Suggestions</h2>
+			</div>
+			<div id="resaleList" class="list"></div>
+		</section>
+	</main>
 
-  <script src="app.js"></script>
+	<nav class="tabbar">
+		<button data-tab="view-swipe" class="tab active">Swipe</button>
+		<button data-tab="view-wardrobe" class="tab">Wardrobe</button>
+		<button data-tab="view-sell" class="tab">Sell</button>
+	</nav>
+
+	<div id="sheet" class="sheet" aria-hidden="true">
+		<div class="sheet__content">
+			<header class="sheet__header">
+				<h3>Add Item</h3>
+				<button id="addCloseBtn" class="icon-btn" aria-label="Close">✕</button>
+			</header>
+			<form id="addForm" class="form">
+				<label>Name<input id="name" required placeholder="White Oxford Shirt"></label>
+				<label>Category
+					<select id="category" required>
+						<option value="top">Top</option>
+						<option value="bottom">Bottom</option>
+						<option value="dress">Dress</option>
+						<option value="outerwear">Outerwear</option>
+						<option value="shoes">Shoes</option>
+						<option value="accessory">Accessory</option>
+					</select>
+				</label>
+				<label>Color<input id="color" required placeholder="Navy"></label>
+				<label>Formality
+					<select id="formality" required>
+						<option value="casual">Casual</option>
+						<option value="smart-casual" selected>Smart Casual</option>
+						<option value="business">Business</option>
+						<option value="formal">Formal</option>
+					</select>
+				</label>
+				<label>Warmth
+					<select id="warmth" required>
+						<option value="light">Light</option>
+						<option value="medium" selected>Medium</option>
+						<option value="warm">Warm</option>
+					</select>
+				</label>
+				<label>Image URL<input id="imageUrl" placeholder="https://... (optional)"></label>
+				<label>Original Price<input id="cost" type="number" min="0" step="1" placeholder="120"></label>
+				<label>Brand<input id="brand" placeholder="Uniqlo"></label>
+				<div class="sheet__actions">
+					<button type="button" id="clearBtn" class="btn btn-danger btn-ghost">Clear All</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script src="app.js"></script>
 </body>
-
 </html>
