@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Wardrobe - Outfit & Resale Helper</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="container">
+      <h1>Smart Wardrobe</h1>
+      <p class="subtitle">Plan your outfit, identify sellable pieces, and get styling inspo.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card" id="add-item-section">
+      <h2>Add to Wardrobe</h2>
+      <form id="add-item-form" class="grid-2">
+        <div class="form-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="e.g., White Oxford Shirt" required>
+        </div>
+        <div class="form-field">
+          <label for="category">Category</label>
+          <select id="category" required>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="dress">Dress</option>
+            <option value="outerwear">Outerwear</option>
+            <option value="shoes">Shoes</option>
+            <option value="accessory">Accessory</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="color">Color</label>
+          <input type="text" id="color" placeholder="e.g., Navy" required>
+        </div>
+        <div class="form-field">
+          <label for="formality">Formality</label>
+          <select id="formality" required>
+            <option value="casual">Casual</option>
+            <option value="smart-casual">Smart Casual</option>
+            <option value="business">Business</option>
+            <option value="formal">Formal</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="warmth">Warmth</label>
+          <select id="warmth" required>
+            <option value="light">Light</option>
+            <option value="medium">Medium</option>
+            <option value="warm">Warm</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="imageUrl">Image URL</label>
+          <input type="url" id="imageUrl" placeholder="https://... (optional)">
+        </div>
+        <div class="form-field">
+          <label for="cost">Original Price (optional)</label>
+          <input type="number" id="cost" placeholder="e.g., 120" min="0" step="1">
+        </div>
+        <div class="form-field">
+          <label for="brand">Brand (optional)</label>
+          <input type="text" id="brand" placeholder="e.g., Uniqlo">
+        </div>
+        <div class="form-actions span-2">
+          <button type="submit" class="btn primary">Add Item</button>
+          <button type="button" id="seedBtn" class="btn">Load Demo Wardrobe</button>
+          <button type="button" id="clearBtn" class="btn danger">Clear All</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" id="wardrobe-section">
+      <h2>Your Wardrobe</h2>
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="Search by name or color...">
+        <select id="filterCategory">
+          <option value="all">All categories</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>
+          <option value="dress">Dress</option>
+          <option value="outerwear">Outerwear</option>
+          <option value="shoes">Shoes</option>
+          <option value="accessory">Accessory</option>
+        </select>
+      </div>
+      <div id="wardrobeGrid" class="grid-4"></div>
+    </section>
+
+    <section class="card" id="outfit-section">
+      <h2>Outfit Suggestion</h2>
+      <form id="outfit-form" class="grid-3">
+        <div class="form-field">
+          <label for="temp">Temperature (°C)</label>
+          <input type="number" id="temp" placeholder="e.g., 18" value="18">
+        </div>
+        <div class="form-field">
+          <label for="occasion">Occasion</label>
+          <select id="occasion">
+            <option value="casual">Casual</option>
+            <option value="smart-casual">Smart Casual</option>
+            <option value="business">Business</option>
+            <option value="formal">Formal</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button class="btn primary" type="submit">Suggest Outfit</button>
+        </div>
+      </form>
+      <div id="outfitResult" class="outfit-result"></div>
+    </section>
+
+    <section class="card" id="resale-section">
+      <h2>Sell Recommendations</h2>
+      <p class="muted">Items you rarely wear with suggested resale prices.</p>
+      <div id="resaleList" class="grid-3"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>Built with ❤️ to help you wear more and waste less.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
